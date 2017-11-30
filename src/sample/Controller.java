@@ -7,6 +7,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 
 import java.awt.*;
+import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.Comparator;
 
 public class Controller {
@@ -33,7 +35,6 @@ public class Controller {
     int maxvalue=0;
 
     public void initialize(){
-
         XYChart.Series<String, Number> numberchart= new XYChart.Series<>();
         numberchart.getData().add(new XYChart.Data<>("Bob", 1500));
         numberchart.getData().add(new XYChart.Data<>("John", 3000));
@@ -42,6 +43,9 @@ public class Controller {
         load.setOnAction(event -> {
             linechart.getData().add(numberchart);
             numberchart.setName("Salaries");
+
+
+
         });
 
 
@@ -63,95 +67,25 @@ public class Controller {
         }});
 
         sort.setOnAction(event -> {
-            numberchart.getData().sort(););
 
+            linechart.getData().removeAll();
 
-        
 
+            XYChart.Series<String, Number> numberchartsorted= new XYChart.Series<>();
 
+            numberchartsorted.getData().add(new XYChart.Data<>("Bob", 1500));
+            numberchartsorted.getData().add(new XYChart.Data<>("John", 3000));
+            numberchartsorted.getData().add(new XYChart.Data<>("Mike", 2000));
+            numberchartsorted.getData().add(new XYChart.Data<>("Sam", 5000));
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            Collections.sort(numberchartsorted.getData(), new Comparator<XYChart.Data<String, Number>>() {
+                @Override
+                public int compare(XYChart.Data<String, Number> o1, XYChart.Data<String, Number> o2) {
+                    return new BigDecimal(o1.getYValue().toString()).compareTo(new BigDecimal(o2.getYValue().toString()))
+                            ;
+                }
+            });
+            linechart.getData().add(numberchartsorted);
 
         });
 
